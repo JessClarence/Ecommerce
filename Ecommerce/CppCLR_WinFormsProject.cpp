@@ -3,6 +3,7 @@
 #include "RegistrationForm.h"
 #include "ProductForm.h"
 #include "MainForm.h"
+#include "CartForm.h"
 using namespace System;
 using namespace System::Windows::Forms;
 
@@ -17,6 +18,7 @@ void main(array<System::String ^> ^args)
 	Application::SetCompatibleTextRenderingDefault(false);
 	
 	User^ user = nullptr;
+	User^ user2 = nullptr;
 
 	while (true) {
 		Ecommerce::LoginForm loginForm;
@@ -31,11 +33,13 @@ void main(array<System::String ^> ^args)
 			}
 			else {
 				user = registerForm.user;
+				user2 = registerForm.user;
 				break;
 			}
 		}
 		else {
 			user = loginForm.user;
+			user2 = loginForm.user;
 			break;
 		}
 	}
@@ -55,7 +59,7 @@ void main(array<System::String ^> ^args)
 			Application::Run(% mainForm);
 		}
 		else {
-			Ecommerce::ProductForm product;
+			Ecommerce::ProductForm product(user2);
 			Application::Run(% product);
 		}
 		

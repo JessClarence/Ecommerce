@@ -715,7 +715,7 @@ namespace Ecommerce {
 
 			System::Windows::Forms::DialogResult dialogResult = MessageBox::Show(
 				"Do you want to Delete?",
-				"Payment Confirmation",
+				"Confirmation",
 				MessageBoxButtons::YesNo,
 				MessageBoxIcon::Question);
 
