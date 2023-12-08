@@ -105,4 +105,105 @@ public:
 		dataTable = dt;
 	}
 
+	static void Reload_DataGrid_Type(Object^% dataTable, String^ type) {
+		SqlConnection^ sqlConn = gcnew SqlConnection(connstring);
+		sqlConn->Open();
+
+		String^ sqlQuery = "SELECT Id,meat,price FROM products WHERE type=@type";
+
+		SqlCommand^ command = gcnew SqlCommand(sqlQuery, sqlConn);
+		command->Parameters->AddWithValue("@type", type);
+
+		SqlDataAdapter^ da = gcnew SqlDataAdapter(command);
+		DataTable^ dt = gcnew DataTable();
+		da->Fill(dt);
+		dataTable = dt;
+	}
+	static void Reload_DataGrid_Cart(Object^% dataTable, String^ email) {
+		SqlConnection^ sqlConn = gcnew SqlConnection(connstring);
+		sqlConn->Open();
+
+		String^ sqlQuery = "SELECT Id,products,price FROM carts WHERE username=@email";
+
+		SqlCommand^ command = gcnew SqlCommand(sqlQuery, sqlConn);
+		command->Parameters->AddWithValue("@email", email);
+
+		SqlDataAdapter^ da = gcnew SqlDataAdapter(command);
+		DataTable^ dt = gcnew DataTable();
+		da->Fill(dt);
+		dataTable = dt;
+	}
+
+	static void Add_Carts(String^ username, int price, String^ products) {
+
+		try {
+
+			SqlConnection sqlConn(connstring);
+			sqlConn.Open();
+
+			String^ sqlQuery = "INSERT INTO carts " +
+				"(products, price, username) VALUES" +
+				"(@products, @price, @username);";
+
+			SqlCommand command(sqlQuery, % sqlConn);
+			command.Parameters->AddWithValue("@products", products);
+			command.Parameters->AddWithValue("@price", price);
+			command.Parameters->AddWithValue("@username", username);
+
+			command.ExecuteNonQuery();
+
+			MessageBox::Show("Added to cart",
+				"Success", MessageBoxButtons::OK);
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Failed to register new user",
+				"Register Failure", MessageBoxButtons::OK);
+		}
+
+
+	}
+	static void Purchase_Success(String^ username) {
+		try {
+			// Correctly declare and use SqlConnection as a managed object
+			SqlConnection^ sqlConn = gcnew SqlConnection(connstring);
+			sqlConn->Open();
+
+			// Correctly declare and use SqlCommand as a managed object
+			String^ sqlQuery = "DELETE FROM carts WHERE username=@username";
+			SqlCommand^ command = gcnew SqlCommand(sqlQuery, sqlConn);
+			command->Parameters->AddWithValue("@username", username);
+			command->ExecuteNonQuery();
+
+			MessageBox::Show("Payment is Successful", "Success", MessageBoxButtons::OK);
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Failed to register new user",
+				"Register Failure", MessageBoxButtons::OK);
+		}
+	}
+
+	static int TotalPrice(String^ email) {
+		SqlConnection^ sqlConn = gcnew SqlConnection(connstring);
+		sqlConn->Open();
+
+		String^ sqlQuery = "SELECT price FROM carts WHERE username=@email";
+
+		SqlCommand^ command = gcnew SqlCommand(sqlQuery, sqlConn);
+		command->Parameters->AddWithValue("@email", email);
+
+		SqlDataAdapter^ da = gcnew SqlDataAdapter(command);
+		DataTable^ dt = gcnew DataTable();
+		da->Fill(dt);
+
+		int totalPrice = 0;
+		for each (DataRow ^ row in dt->Rows) {
+			if (!row->IsNull("price")) {
+				totalPrice += Convert::ToInt32(row["price"]);
+			}
+		}
+
+		return totalPrice;
+	}
+
+
 };
