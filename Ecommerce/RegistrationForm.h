@@ -174,6 +174,7 @@ namespace Ecommerce {
 			this->checkBoxShowPass->TabIndex = 11;
 			this->checkBoxShowPass->Text = L"Show Password";
 			this->checkBoxShowPass->UseVisualStyleBackColor = true;
+			this->checkBoxShowPass->CheckedChanged += gcnew System::EventHandler(this, &RegistrationForm::checkBoxShowPass_CheckedChanged);
 			// 
 			// btnRegister
 			// 
@@ -336,6 +337,16 @@ namespace Ecommerce {
 	private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->switchToLogin = true;
 		this->Close();
+	}
+	private: System::Void checkBoxShowPass_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (checkBoxShowPass->Checked == true) {
+			txtPassword->UseSystemPasswordChar = true;
+			txtConPass->UseSystemPasswordChar = true;
+		}
+		else {
+			txtPassword->UseSystemPasswordChar = false;
+			txtConPass->UseSystemPasswordChar = false;
+		}
 	}
 };
 }

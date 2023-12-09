@@ -1,5 +1,5 @@
 #pragma once
-
+#include "User.h"
 #include <cliext/list>
 
 using namespace System;
@@ -203,6 +203,64 @@ public:
 		}
 
 		return totalPrice;
+	}
+	static List<Product^>^ Reload_DataGrid_Cart(String^ query) {
+		SqlConnection^ sqlConn = gcnew SqlConnection(connstring);
+		sqlConn->Open();
+
+		String^ sqlQuery = "SELECT * FROM products WHERE type=@type";
+
+		SqlCommand^ command = gcnew SqlCommand(sqlQuery, sqlConn);
+		command->Parameters->AddWithValue("@type", query);
+
+		SqlDataAdapter^ da = gcnew SqlDataAdapter(command);
+		DataTable^ dt = gcnew DataTable();
+		da->Fill(dt);
+
+		List<Product^>^ products = gcnew List<Product^>();
+		for each (DataRow ^ row in dt->Rows) {
+			Product^ product = gcnew Product();
+			product->id = Convert::ToInt32(row["id"]);
+			product->meat = row["meat"]->ToString();
+			product->price = Convert::ToInt32(row["price"]);
+			product->type = row["type"]->ToString();
+			products->Add(product);
+		}
+
+		return products;
+	}
+
+	static Product^ GetProductById(int id) {
+		try {
+			SqlConnection sqlConn(connstring);
+			sqlConn.Open();
+
+			String^ sqlQuery = "SELECT * FROM products WHERE Id=@id";
+
+			SqlCommand command(sqlQuery, % sqlConn);
+			command.Parameters->AddWithValue("@id", id);
+
+			SqlDataReader^ reader = command.ExecuteReader();
+
+			if (reader->Read()) {
+				Product^ product = gcnew Product();
+				// Assuming your product table has columns like 'Id', 'Name', 'Price'
+				product->id = Convert::ToInt32(reader["Id"]);
+				product->meat = reader["Meat"]->ToString();
+				product->price = Convert::ToInt32(reader["Price"]);
+
+				sqlConn.Close();
+				return product;
+			}
+
+			sqlConn.Close();
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Failed to fetch product details",
+				"Error", MessageBoxButtons::OK);
+		}
+
+		return nullptr;
 	}
 
 
