@@ -19,6 +19,22 @@ namespace Ecommerce {
 	public ref class ProductForm : public System::Windows::Forms::Form
 	{
 	private: String^ rightUser;
+	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel1;
+	private: System::Windows::Forms::Panel^ pnlbeef;
+
+	private: System::Windows::Forms::Panel^ pnlchicken;
+
+	private: System::Windows::Forms::Panel^ pnlpork;
+	private: System::Windows::Forms::Panel^ panel4;
+
+
+
+
+
+
+
+
+
 	private: User^ user;
 	public:
 		ProductForm(User^ user)
@@ -34,6 +50,80 @@ namespace Ecommerce {
 			label2->Text = "Hi " + rightUser + "!";
 			this->user = user;
 		}
+	private: void AddProductToUI(Product^ product, String^ images) {
+		
+		System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ProductForm::typeid));
+		// 
+		// panel4
+		// 
+		Panel^ panel4 = gcnew Panel();
+		panel4->Name = String::Format("PnlProduct{0}", product->id); // id
+		panel4->BackColor = System::Drawing::Color::White;
+		panel4->Size = System::Drawing::Size(184, 189);
+		panel4->Margin = System::Windows::Forms::Padding(10);
+
+		// 
+		// panel5
+		// 
+		Panel^ panel5 = gcnew Panel();
+		panel5->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(images)));
+		panel5->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		panel5->Location = System::Drawing::Point(3, 3);
+		panel5->Name = String::Format("panel5{0}", product->id);
+		panel5->Size = System::Drawing::Size(178, 99);
+		panel5->TabIndex = 1;
+		// 
+		// lblPrice
+		// 
+		Label^ lblPrice = gcnew Label();
+		lblPrice->AutoSize = true;
+		lblPrice->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			static_cast<System::Byte>(0)));
+		lblPrice->Location = System::Drawing::Point(3, 130);
+		lblPrice->Name = String::Format("lblPrice{0}", product->id);
+		lblPrice->Size = System::Drawing::Size(28, 21);
+		lblPrice->TabIndex = 1;
+		lblPrice->Text = String::Format("P{0}.00", product->price); // price
+		// 
+		// btnPayment
+		// 
+		Button^ btnPayment = gcnew Button();
+		btnPayment->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(75)),
+			static_cast<System::Int32>(static_cast<System::Byte>(145)));
+		btnPayment->Cursor = System::Windows::Forms::Cursors::Hand;
+		btnPayment->FlatAppearance->BorderSize = 0;
+		btnPayment->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+		btnPayment->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			static_cast<System::Byte>(0)));
+		btnPayment->ForeColor = System::Drawing::Color::White;
+		btnPayment->Location = System::Drawing::Point(37, 154);
+		btnPayment->Name = String::Format("btnPayment{0}", product->id);
+		btnPayment->Size = System::Drawing::Size(114, 28);
+		btnPayment->TabIndex = 23;
+		btnPayment->Text = L"ADD TO CART";
+		btnPayment->UseVisualStyleBackColor = false;
+		btnPayment->Click += gcnew System::EventHandler(this, &ProductForm::AddToCart_Click);
+		// 
+		// lblMeat
+		// 
+		Label^ lblMeat = gcnew Label();
+		lblMeat->AutoSize = true;
+		lblMeat->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			static_cast<System::Byte>(0)));
+		lblMeat->Location = System::Drawing::Point(3, 101);
+		lblMeat->Name = String::Format("lblMeat{0}", product->id);// id
+		lblMeat->Size = System::Drawing::Size(57, 25);
+		lblMeat->TabIndex = 0;
+		lblMeat->Text = product->meat;
+
+
+		panel4->Controls->Add(lblPrice);
+		panel4->Controls->Add(panel5);
+		panel4->Controls->Add(btnPayment);
+		panel4->Controls->Add(lblMeat);
+
+		this->flowLayoutPanel1->Controls->Add(panel4);
+	}
 
 	protected:
 		/// <summary>
@@ -104,17 +194,17 @@ namespace Ecommerce {
 	private: System::Windows::Forms::Button^ btnChicken;
 	private: System::Windows::Forms::Panel^ panel3;
 	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::Panel^ pnlbeef;
-
-	private: System::Windows::Forms::DataGridView^ dataGridView1;
 
 
 
 
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column2;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column3;
-	private: System::Windows::Forms::DataGridViewButtonColumn^ btnPurchase;
+
+
+
+
+
+
+
 
 
 	private: System::Windows::Forms::Button^ btnCart;
@@ -204,9 +294,11 @@ namespace Ecommerce {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ProductForm::typeid));
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle4 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->panelTop = (gcnew System::Windows::Forms::Panel());
+			this->panel4 = (gcnew System::Windows::Forms::Panel());
+			this->pnlbeef = (gcnew System::Windows::Forms::Panel());
+			this->pnlchicken = (gcnew System::Windows::Forms::Panel());
+			this->pnlpork = (gcnew System::Windows::Forms::Panel());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->button2 = (gcnew System::Windows::Forms::Button());
@@ -218,23 +310,21 @@ namespace Ecommerce {
 			this->btnPork = (gcnew System::Windows::Forms::Button());
 			this->btnChicken = (gcnew System::Windows::Forms::Button());
 			this->btnCart = (gcnew System::Windows::Forms::Button());
-			this->pnlbeef = (gcnew System::Windows::Forms::Panel());
-			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->btnPurchase = (gcnew System::Windows::Forms::DataGridViewButtonColumn());
+			this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->panelTop->SuspendLayout();
 			this->panel1->SuspendLayout();
 			this->CategoryPanel->SuspendLayout();
-			this->pnlbeef->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panelTop
 			// 
 			this->panelTop->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(116)), static_cast<System::Int32>(static_cast<System::Byte>(86)),
 				static_cast<System::Int32>(static_cast<System::Byte>(174)));
+			this->panelTop->Controls->Add(this->panel4);
+			this->panelTop->Controls->Add(this->pnlbeef);
+			this->panelTop->Controls->Add(this->button2);
+			this->panelTop->Controls->Add(this->pnlchicken);
+			this->panelTop->Controls->Add(this->pnlpork);
 			this->panelTop->Controls->Add(this->panel2);
 			this->panelTop->Controls->Add(this->label8);
 			this->panelTop->Dock = System::Windows::Forms::DockStyle::Top;
@@ -242,6 +332,40 @@ namespace Ecommerce {
 			this->panelTop->Name = L"panelTop";
 			this->panelTop->Size = System::Drawing::Size(1100, 68);
 			this->panelTop->TabIndex = 1;
+			// 
+			// panel4
+			// 
+			this->panel4->Location = System::Drawing::Point(568, 0);
+			this->panel4->Name = L"panel4";
+			this->panel4->Size = System::Drawing::Size(472, 65);
+			this->panel4->TabIndex = 24;
+			// 
+			// pnlbeef
+			// 
+			this->pnlbeef->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlbeef.BackgroundImage")));
+			this->pnlbeef->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pnlbeef->Location = System::Drawing::Point(723, 2);
+			this->pnlbeef->Name = L"pnlbeef";
+			this->pnlbeef->Size = System::Drawing::Size(91, 63);
+			this->pnlbeef->TabIndex = 23;
+			// 
+			// pnlchicken
+			// 
+			this->pnlchicken->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlchicken.BackgroundImage")));
+			this->pnlchicken->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pnlchicken->Location = System::Drawing::Point(820, 2);
+			this->pnlchicken->Name = L"pnlchicken";
+			this->pnlchicken->Size = System::Drawing::Size(91, 63);
+			this->pnlchicken->TabIndex = 22;
+			// 
+			// pnlpork
+			// 
+			this->pnlpork->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlpork.BackgroundImage")));
+			this->pnlpork->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pnlpork->Location = System::Drawing::Point(917, 2);
+			this->pnlpork->Name = L"pnlpork";
+			this->pnlpork->Size = System::Drawing::Size(91, 63);
+			this->pnlpork->TabIndex = 21;
 			// 
 			// panel2
 			// 
@@ -272,7 +396,7 @@ namespace Ecommerce {
 			this->button2->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->button2->FlatAppearance->BorderSize = 0;
 			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button2->Location = System::Drawing::Point(1050, 16);
+			this->button2->Location = System::Drawing::Point(1050, 12);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(38, 37);
 			this->button2->TabIndex = 7;
@@ -285,7 +409,6 @@ namespace Ecommerce {
 				static_cast<System::Int32>(static_cast<System::Byte>(174)));
 			this->panel1->Controls->Add(this->panel3);
 			this->panel1->Controls->Add(this->label2);
-			this->panel1->Controls->Add(this->button2);
 			this->panel1->Dock = System::Windows::Forms::DockStyle::Bottom;
 			this->panel1->Location = System::Drawing::Point(0, 437);
 			this->panel1->Name = L"panel1";
@@ -309,9 +432,10 @@ namespace Ecommerce {
 			this->label2->ForeColor = System::Drawing::Color::White;
 			this->label2->Location = System::Drawing::Point(64, 14);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(122, 30);
+			this->label2->Size = System::Drawing::Size(106, 30);
 			this->label2->TabIndex = 21;
-			this->label2->Text = L"Hello, Jess!";
+			this->label2->Text = L"Hello, Fe!";
+			this->label2->Click += gcnew System::EventHandler(this, &ProductForm::label2_Click);
 			// 
 			// CategoryPanel
 			// 
@@ -396,100 +520,21 @@ namespace Ecommerce {
 			this->btnCart->UseVisualStyleBackColor = false;
 			this->btnCart->Click += gcnew System::EventHandler(this, &ProductForm::btnCart_Click);
 			// 
-			// pnlbeef
+			// flowLayoutPanel1
 			// 
-			this->pnlbeef->Controls->Add(this->dataGridView1);
-			this->pnlbeef->Location = System::Drawing::Point(158, 74);
-			this->pnlbeef->Name = L"pnlbeef";
-			this->pnlbeef->Size = System::Drawing::Size(930, 357);
-			this->pnlbeef->TabIndex = 7;
-			// 
-			// dataGridView1
-			// 
-			this->dataGridView1->AllowUserToAddRows = false;
-			this->dataGridView1->AllowUserToDeleteRows = false;
-			this->dataGridView1->AllowUserToResizeColumns = false;
-			this->dataGridView1->AllowUserToResizeRows = false;
-			this->dataGridView1->BackgroundColor = System::Drawing::Color::White;
-			this->dataGridView1->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->dataGridView1->ColumnHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::Single;
-			dataGridViewCellStyle3->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
-				static_cast<System::Int32>(static_cast<System::Byte>(75)), static_cast<System::Int32>(static_cast<System::Byte>(145)));
-			dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			dataGridViewCellStyle3->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(224)),
-				static_cast<System::Int32>(static_cast<System::Byte>(224)), static_cast<System::Int32>(static_cast<System::Byte>(224)));
-			dataGridViewCellStyle3->SelectionBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
-				static_cast<System::Int32>(static_cast<System::Byte>(75)), static_cast<System::Int32>(static_cast<System::Byte>(145)));
-			dataGridViewCellStyle3->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle3->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->dataGridView1->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-			this->dataGridView1->ColumnHeadersHeight = 35;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
-				this->Column1,
-					this->Column2, this->Column3, this->btnPurchase
-			});
-			dataGridViewCellStyle4->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle4->BackColor = System::Drawing::SystemColors::Window;
-			dataGridViewCellStyle4->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			dataGridViewCellStyle4->ForeColor = System::Drawing::Color::DimGray;
-			dataGridViewCellStyle4->SelectionBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
-				static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
-			dataGridViewCellStyle4->SelectionForeColor = System::Drawing::Color::DimGray;
-			dataGridViewCellStyle4->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
-			this->dataGridView1->DefaultCellStyle = dataGridViewCellStyle4;
-			this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->dataGridView1->EnableHeadersVisualStyles = false;
-			this->dataGridView1->GridColor = System::Drawing::Color::Silver;
-			this->dataGridView1->Location = System::Drawing::Point(0, 0);
-			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->RowHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::Single;
-			this->dataGridView1->RowHeadersVisible = false;
-			this->dataGridView1->Size = System::Drawing::Size(930, 357);
-			this->dataGridView1->TabIndex = 6;
-			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &ProductForm::dataGridView1_CellContentClick);
-			// 
-			// Column1
-			// 
-			this->Column1->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
-			this->Column1->DataPropertyName = L"Id";
-			this->Column1->HeaderText = L"ID";
-			this->Column1->Name = L"Column1";
-			this->Column1->Width = 42;
-			// 
-			// Column2
-			// 
-			this->Column2->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
-			this->Column2->DataPropertyName = L"meat";
-			this->Column2->HeaderText = L"MEAT";
-			this->Column2->Name = L"Column2";
-			// 
-			// Column3
-			// 
-			this->Column3->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
-			this->Column3->DataPropertyName = L"price";
-			this->Column3->HeaderText = L"PRICE";
-			this->Column3->Name = L"Column3";
-			this->Column3->Width = 60;
-			// 
-			// btnPurchase
-			// 
-			this->btnPurchase->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
-			this->btnPurchase->HeaderText = L"ADD TO CART";
-			this->btnPurchase->Name = L"btnPurchase";
-			this->btnPurchase->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::Automatic;
-			this->btnPurchase->Text = L"PURCHASE";
-			this->btnPurchase->UseColumnTextForButtonValue = true;
-			this->btnPurchase->Width = 92;
+			this->flowLayoutPanel1->AutoScroll = true;
+			this->flowLayoutPanel1->Location = System::Drawing::Point(172, 74);
+			this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
+			this->flowLayoutPanel1->Size = System::Drawing::Size(916, 357);
+			this->flowLayoutPanel1->TabIndex = 4;
+			this->flowLayoutPanel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &ProductForm::flowLayoutPanel1_Paint);
 			// 
 			// ProductForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1100, 500);
-			this->Controls->Add(this->pnlbeef);
+			this->Controls->Add(this->flowLayoutPanel1);
 			this->Controls->Add(this->CategoryPanel);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->panelTop);
@@ -505,8 +550,6 @@ namespace Ecommerce {
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->CategoryPanel->ResumeLayout(false);
-			this->pnlbeef->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -535,41 +578,66 @@ namespace Ecommerce {
 		}
 	}
 	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-		if (dataGridView1->Columns[e->ColumnIndex]->Name == "btnPurchase") {
-
-			String^ products = dataGridView1->Rows[e->RowIndex]->Cells["Column2"]->Value->ToString();
-			String^ price = dataGridView1->Rows[e->RowIndex]->Cells["Column3"]->Value->ToString();
-
-
-			Connection::Add_Carts(rightUser, System::Int32::Parse(price), products);
-		}
+		
 	}
 	private: System::Void btnBeef_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-		Object^ dataSource = dataGridView1->DataSource;
-		Connection::Reload_DataGrid_Type(dataSource, "beef");
-		dataGridView1->DataSource = dataSource;
+		this->flowLayoutPanel1->Controls->Clear();
+		List<Product^>^ products = Connection::Reload_DataGrid_Cart("beef");
+
+		for each (Product ^ product in products) {
+			AddProductToUI(product, "pnlbeef.BackgroundImage");
+		}
 	}
 	private: System::Void btnPork_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->flowLayoutPanel1->Controls->Clear();
+		List<Product^>^ products = Connection::Reload_DataGrid_Cart("pork");
 
-		Object^ dataSource = dataGridView1->DataSource;
-		Connection::Reload_DataGrid_Type(dataSource, "pork");
-		dataGridView1->DataSource = dataSource;
-		
+		for each (Product ^ product in products) {
+			AddProductToUI(product, "pnlpork.BackgroundImage");
+		}
 	}
 	private: System::Void btnChicken_Click(System::Object^ sender, System::EventArgs^ e) {
-		Object^ dataSource = dataGridView1->DataSource;
-		Connection::Reload_DataGrid_Type(dataSource, "chicken");
-		dataGridView1->DataSource = dataSource;
+		this->flowLayoutPanel1->Controls->Clear();
+		List<Product^>^ products = Connection::Reload_DataGrid_Cart("chicken");
+
+		for each (Product ^ product in products) {
+			AddProductToUI(product, "pnlchicken.BackgroundImage");
+		}
 	}
 	private: System::Void ProductForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		Object^ dataSource = dataGridView1->DataSource;
-		Connection::Reload_DataGrid_Type(dataSource, "beef");
-		dataGridView1->DataSource = dataSource;
+		this->flowLayoutPanel1->Controls->Clear();
+		List<Product^>^ products = Connection::Reload_DataGrid_Cart("beef");
+
+		for each (Product ^ product in products) {
+			AddProductToUI(product, "pnlbeef.BackgroundImage");
+		}
 	}
 	private: System::Void btnCart_Click(System::Object^ sender, System::EventArgs^ e) {
 		CartForm^ cartForm = gcnew CartForm(user);
 		cartForm->Show();
 	}
+	private: System::Void lblPrice_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void flowLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	}
+	private: System::Void AddToCart_Click(System::Object^ sender, System::EventArgs^ e) {
+		Button^ clickedButton = dynamic_cast<Button^>(sender);
+		String^ buttonNamePrefix = "BtnPayment";
+		int startIndex = buttonNamePrefix->Length;
+		if (clickedButton != nullptr) {
+			int productIdString = Convert::ToInt32(clickedButton->Name->Substring(startIndex));
+			Product^ product = Connection::GetProductById(productIdString);
+
+			if (product != nullptr) {
+
+				Connection::Add_Carts(rightUser, product->price, product->meat);
+
+
+			}
+		}
+	}
+	
+private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }

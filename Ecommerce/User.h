@@ -9,3 +9,10 @@ public:
 	String^ username;
 	String^ password;
 };
+public ref class Product {
+public:
+	int id;
+	String^ meat;
+	String^ type;
+	int price;
+};
