@@ -21,6 +21,7 @@ namespace Ecommerce {
 		dataGridView1->DataSource = dataSource;
 	}
 	public:
+		bool logoutRequested;
 		MainForm(void)
 		{
 			InitializeComponent();
@@ -29,6 +30,10 @@ namespace Ecommerce {
 			//
 			panel2->Hide();
 			panel3->Hide();
+		}
+		void Logout() {
+			this->logoutRequested = true;
+			this->Close();
 		}
 
 	protected:
@@ -689,7 +694,17 @@ namespace Ecommerce {
 		panel2->Hide();
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Close();
+		System::Windows::Forms::DialogResult dialogResult = MessageBox::Show(
+			"Do you want to Close this Program?",
+			"Confirmation",
+			MessageBoxButtons::YesNo,
+			MessageBoxIcon::Question);
+
+		if (dialogResult == System::Windows::Forms::DialogResult::Yes) {
+			this->Logout();
+		}
+		else {
+		}
 	}
 	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		Reload();

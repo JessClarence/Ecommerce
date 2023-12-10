@@ -263,5 +263,29 @@ public:
 		return nullptr;
 	}
 
+	static void Delete_Cart(String^ id) {
+		try {
+			int Id = System::Int32::Parse(id);
+
+			SqlConnection sqlConn(connstring);
+			sqlConn.Open();
+
+			String^ sqlQuery = "DELETE carts WHERE Id=@id";
+
+			SqlCommand command(sqlQuery, % sqlConn);
+			command.Parameters->AddWithValue("@id", Id);
+
+			command.ExecuteNonQuery();
+
+			MessageBox::Show("Successfully Deleted",
+				"Success", MessageBoxButtons::OK);
+
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Failed to register new user",
+				"Register Failure", MessageBoxButtons::OK);
+		}
+	}
+
 
 };

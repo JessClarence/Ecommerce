@@ -37,6 +37,7 @@ namespace Ecommerce {
 
 	private: User^ user;
 	public:
+		bool logoutRequested;
 		ProductForm(User^ user)
 		{
 			InitializeComponent();
@@ -46,9 +47,14 @@ namespace Ecommerce {
 
 			//pnlbeef->Hide();
 			//pnlPork->Hide();
+			this->logoutRequested = false;
 			rightUser = user->username->ToString();
 			label2->Text = "Hi " + rightUser + "!";
 			this->user = user;
+		}
+		void Logout() {
+			this->logoutRequested = true;
+			this->Close();
 		}
 	private: void AddProductToUI(Product^ product, String^ images) {
 		
@@ -560,10 +566,6 @@ namespace Ecommerce {
 	private: System::Void panel15_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 		
 	}
-	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Close();
-
-	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 		System::Windows::Forms::DialogResult dialogResult = MessageBox::Show(
 			"Do you want to Close this Program?",
@@ -572,7 +574,7 @@ namespace Ecommerce {
 			MessageBoxIcon::Question);
 
 		if (dialogResult == System::Windows::Forms::DialogResult::Yes) {
-			this->Close();
+			this->Logout();
 		}
 		else {
 		}
