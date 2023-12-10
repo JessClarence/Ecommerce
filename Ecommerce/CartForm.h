@@ -47,10 +47,18 @@ namespace Ecommerce {
 
 	private: System::Windows::Forms::Button^ btnPayment;
 	private: System::Windows::Forms::Button^ btnBack;
+
+
+
+	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column1;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column2;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column3;
-	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::DataGridViewButtonColumn^ btnRemove;
+
+
+
+
 
 
 
@@ -71,15 +79,16 @@ namespace Ecommerce {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle4 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->btnPayment = (gcnew System::Windows::Forms::Button());
 			this->btnBack = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Column2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Column3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->btnRemove = (gcnew System::Windows::Forms::DataGridViewButtonColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -92,33 +101,33 @@ namespace Ecommerce {
 			this->dataGridView1->BackgroundColor = System::Drawing::Color::White;
 			this->dataGridView1->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->dataGridView1->ColumnHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::Single;
-			dataGridViewCellStyle3->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
+			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
 				static_cast<System::Int32>(static_cast<System::Byte>(75)), static_cast<System::Int32>(static_cast<System::Byte>(145)));
-			dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			dataGridViewCellStyle3->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(224)),
+			dataGridViewCellStyle1->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(224)),
 				static_cast<System::Int32>(static_cast<System::Byte>(224)), static_cast<System::Int32>(static_cast<System::Byte>(224)));
-			dataGridViewCellStyle3->SelectionBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
+			dataGridViewCellStyle1->SelectionBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
 				static_cast<System::Int32>(static_cast<System::Byte>(75)), static_cast<System::Int32>(static_cast<System::Byte>(145)));
-			dataGridViewCellStyle3->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle3->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->dataGridView1->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle1->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridView1->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this->dataGridView1->ColumnHeadersHeight = 35;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(3) {
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
 				this->Column1,
-					this->Column2, this->Column3
+					this->Column2, this->Column3, this->btnRemove
 			});
-			dataGridViewCellStyle4->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle4->BackColor = System::Drawing::SystemColors::Window;
-			dataGridViewCellStyle4->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle2->BackColor = System::Drawing::SystemColors::Window;
+			dataGridViewCellStyle2->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			dataGridViewCellStyle4->ForeColor = System::Drawing::Color::DimGray;
-			dataGridViewCellStyle4->SelectionBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
+			dataGridViewCellStyle2->ForeColor = System::Drawing::Color::DimGray;
+			dataGridViewCellStyle2->SelectionBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)),
 				static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
-			dataGridViewCellStyle4->SelectionForeColor = System::Drawing::Color::DimGray;
-			dataGridViewCellStyle4->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
-			this->dataGridView1->DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2->SelectionForeColor = System::Drawing::Color::DimGray;
+			dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
+			this->dataGridView1->DefaultCellStyle = dataGridViewCellStyle2;
 			this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Top;
 			this->dataGridView1->EnableHeadersVisualStyles = false;
 			this->dataGridView1->GridColor = System::Drawing::Color::Silver;
@@ -165,6 +174,17 @@ namespace Ecommerce {
 			this->btnBack->UseVisualStyleBackColor = false;
 			this->btnBack->Click += gcnew System::EventHandler(this, &CartForm::btnBack_Click_1);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(78, 383);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(85, 17);
+			this->label1->TabIndex = 27;
+			this->label1->Text = L"TOTAL: P1000";
+			// 
 			// Column1
 			// 
 			this->Column1->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
@@ -188,16 +208,14 @@ namespace Ecommerce {
 			this->Column3->Name = L"Column3";
 			this->Column3->Width = 60;
 			// 
-			// label1
+			// btnRemove
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(78, 383);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(85, 17);
-			this->label1->TabIndex = 27;
-			this->label1->Text = L"TOTAL: P1000";
+			this->btnRemove->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
+			this->btnRemove->HeaderText = L"";
+			this->btnRemove->Name = L"btnRemove";
+			this->btnRemove->Text = L"REMOVE";
+			this->btnRemove->UseColumnTextForButtonValue = true;
+			this->btnRemove->Width = 5;
 			// 
 			// CartForm
 			// 
@@ -225,6 +243,31 @@ namespace Ecommerce {
 		this->Close();
 	}
 	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		String^ id = dataGridView1->Rows[e->RowIndex]->Cells["Column1"]->Value->ToString();
+
+		if (dataGridView1->Columns[e->ColumnIndex]->Name == "btnRemove") {
+
+			System::Windows::Forms::DialogResult dialogResult = MessageBox::Show(
+				"Do you want to Delete?",
+				"Confirmation",
+				MessageBoxButtons::YesNo,
+				MessageBoxIcon::Question);
+
+			if (dialogResult == System::Windows::Forms::DialogResult::Yes) {
+				Connection::Delete_Cart(id);
+				
+
+				Object^ dataSource = dataGridView1->DataSource;
+				Connection::Reload_DataGrid_Cart(dataSource, rightUser);
+				dataGridView1->DataSource = dataSource;
+
+				Decimal something = Connection::TotalPrice(rightUser);
+				label1->Text = "P" + something.ToString() + ".00";
+			}
+			else {
+			}
+		}
+	
 	}
 	private: System::Void CartForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		

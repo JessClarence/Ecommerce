@@ -12,66 +12,66 @@ using namespace System::Windows::Forms;
 enum class UserRole { Admin, User, None };
 UserRole userRole = UserRole::None;
 
-void main(array<System::String ^> ^args)
-{
-	Application::EnableVisualStyles();
-	Application::SetCompatibleTextRenderingDefault(false);
-	
-	User^ user = nullptr;
-	User^ user2 = nullptr;
+void main(array<System::String^>^ args) {
+    Application::EnableVisualStyles();
+    Application::SetCompatibleTextRenderingDefault(false);
 
-	while (true) {
-		Ecommerce::LoginForm loginForm;
-		loginForm.ShowDialog();
+    while (true) {
+        User^ user = nullptr;
+        User^ user2 = nullptr;
+        Ecommerce::LoginForm loginForm;
+        Ecommerce::RegistrationForm registerForm;
 
-		if (loginForm.switchToRegister) {
-			Ecommerce::RegistrationForm registerForm;
-			registerForm.ShowDialog();
+        loginForm.ShowDialog();
 
-			if (registerForm.switchToLogin) {
-				continue;
-			}
-			else {
-				user = registerForm.user;
-				user2 = registerForm.user;
-				break;
-			}
-		}
-		else {
-			user = loginForm.user;
-			user2 = loginForm.user;
-			break;
-		}
-	}
+        if (loginForm.switchToRegister) {
+            registerForm.ShowDialog();
+            if (registerForm.switchToLogin) {
+                continue; // Go back to login form
+            }
+            else {
+                user = registerForm.user;
+                user2 = registerForm.user;
+                // break; // Do not break here
+            }
+        }
+        else {
+            user = loginForm.user;
+            user2 = loginForm.user;
+            // break; // Do not break here
+        }
 
-	if (user != nullptr) {
+        if (user == nullptr) {
+            break; // Exit the loop and application if no user is logged in
+        }
 
-		//Ecommerce::ProductForm productForm;
-		Ecommerce::MainForm mainForm;
-		if (user->username == "admin" && user->password == "admin") {
-			userRole = UserRole::Admin;
-		}
-		else {
-			userRole = UserRole::User;
-		}
+        Ecommerce::ProductForm product(user2);
+        if (user->username == "admin" && user->password == "admin") {
+            userRole = UserRole::Admin;
+        }
+        else {
+            userRole = UserRole::User;
+        }
 
-		if (userRole == UserRole::Admin) {
-			Application::Run(% mainForm);
-		}
-		else {
-			Ecommerce::ProductForm product(user2);
-			Application::Run(% product);
-		}
-		
-	}
-	else {
-		MessageBox::Show("Authentication Canceled", "Program.cpp", MessageBoxButtons::OK);
-	}
+        if (userRole == UserRole::Admin) {
+            Ecommerce::MainForm mainForm;
+            Application::Run(% mainForm);
+            if (mainForm.logoutRequested) {
+                continue; // Go back to the login form
+            }
+        }
+        else {
+            Application::Run(% product);
+            if (product.logoutRequested) {
+                continue; // Go back to the login form
+            }
+        }
 
-	/*Application::Run(gcnew Ecommerce::RegistrationForm());*/
-
-
+        // If we reach this point without logging out, exit the loop and the application
+        break;
+    }
 }
+
 
 
 
