@@ -20,6 +20,10 @@ namespace Ecommerce {
 		Connection::Reload_DataGrid(dataSource, "products");
 		dataGridView1->DataSource = dataSource;
 	}
+	private: System::Windows::Forms::Label^ label11;
+	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::TextBox^ txtId;
+
 	public:
 		bool logoutRequested;
 		MainForm(void)
@@ -175,6 +179,9 @@ namespace Ecommerce {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->btnCreate = (gcnew System::Windows::Forms::Button());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label11 = (gcnew System::Windows::Forms::Label());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->txtId = (gcnew System::Windows::Forms::TextBox());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -360,7 +367,7 @@ namespace Ecommerce {
 			this->btnCreate->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnCreate->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 9.75F, System::Drawing::FontStyle::Bold));
 			this->btnCreate->ForeColor = System::Drawing::Color::White;
-			this->btnCreate->Location = System::Drawing::Point(604, 16);
+			this->btnCreate->Location = System::Drawing::Point(229, 16);
 			this->btnCreate->Name = L"btnCreate";
 			this->btnCreate->Size = System::Drawing::Size(98, 34);
 			this->btnCreate->TabIndex = 2;
@@ -371,6 +378,9 @@ namespace Ecommerce {
 			// panel1
 			// 
 			this->panel1->BackColor = System::Drawing::Color::Gray;
+			this->panel1->Controls->Add(this->label11);
+			this->panel1->Controls->Add(this->button3);
+			this->panel1->Controls->Add(this->txtId);
 			this->panel1->Controls->Add(this->button2);
 			this->panel1->Controls->Add(this->btnCreate);
 			this->panel1->Controls->Add(this->label1);
@@ -380,6 +390,48 @@ namespace Ecommerce {
 			this->panel1->Size = System::Drawing::Size(750, 63);
 			this->panel1->TabIndex = 0;
 			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::panel1_Paint);
+			// 
+			// label11
+			// 
+			this->label11->AutoSize = true;
+			this->label11->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label11->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->label11->Location = System::Drawing::Point(512, 15);
+			this->label11->Name = L"label11";
+			this->label11->Size = System::Drawing::Size(41, 30);
+			this->label11->TabIndex = 28;
+			this->label11->Text = L"ID:";
+			// 
+			// button3
+			// 
+			this->button3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->button3->FlatAppearance->BorderSize = 0;
+			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button3->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 9.75F, System::Drawing::FontStyle::Bold));
+			this->button3->ForeColor = System::Drawing::Color::White;
+			this->button3->Location = System::Drawing::Point(631, 14);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(70, 34);
+			this->button3->TabIndex = 27;
+			this->button3->Text = L"SEARCH";
+			this->button3->UseVisualStyleBackColor = false;
+			this->button3->Click += gcnew System::EventHandler(this, &MainForm::button3_Click);
+			// 
+			// txtId
+			// 
+			this->txtId->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(230)), static_cast<System::Int32>(static_cast<System::Byte>(231)),
+				static_cast<System::Int32>(static_cast<System::Byte>(233)));
+			this->txtId->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->txtId->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->txtId->Location = System::Drawing::Point(555, 18);
+			this->txtId->Multiline = true;
+			this->txtId->Name = L"txtId";
+			this->txtId->Size = System::Drawing::Size(70, 28);
+			this->txtId->TabIndex = 26;
 			// 
 			// button2
 			// 
@@ -803,6 +855,20 @@ namespace Ecommerce {
 	}
 	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 		panel3->Hide();
+	}
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+		int id;
+		try {
+			id = Convert::ToInt32(txtId->Text);
+		}
+		catch (FormatException^) {
+			MessageBox::Show("Invalid input: Please enter a valid integer",
+				"Input Error", MessageBoxButtons::OK);
+		}
+
+		Object^ dataSource = dataGridView1->DataSource;
+		Connection::Search_DataGrid(dataSource, id);
+		dataGridView1->DataSource = dataSource;
 	}
 };
 }
