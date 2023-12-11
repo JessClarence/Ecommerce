@@ -105,6 +105,21 @@ public:
 		dataTable = dt;
 	}
 
+	static void Search_DataGrid(Object^% dataTable, int id) {
+		SqlConnection^ sqlConn = gcnew SqlConnection(connstring);
+		sqlConn->Open();
+
+		String^ sqlQuery = "SELECT * FROM products WHERE Id=@id";
+
+		SqlCommand^ command = gcnew SqlCommand(sqlQuery, sqlConn);
+		command->Parameters->AddWithValue("@id", id);
+
+		SqlDataAdapter^ da = gcnew SqlDataAdapter(command);
+		DataTable^ dt = gcnew DataTable();
+		da->Fill(dt);
+		dataTable = dt;
+	}
+
 	static void Reload_DataGrid_Type(Object^% dataTable, String^ type) {
 		SqlConnection^ sqlConn = gcnew SqlConnection(connstring);
 		sqlConn->Open();
